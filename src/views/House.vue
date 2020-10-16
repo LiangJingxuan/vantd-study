@@ -41,6 +41,7 @@
       :data-source="data"
       rowKey="id"
       :pagination="true"
+      :customRow="exitCustomRow"
     >
       <span slot="action" slot-scope="record">
         <a>编辑</a>
@@ -57,10 +58,7 @@
       @ok="handleOk"
       @cancel="handleCancel"
     >
-      <a-form
-        class="ant-advanced-search-form"
-        :form="form"
-      >
+      <a-form class="ant-advanced-search-form" :form="form">
         <a-row :gutter="24">
           <a-col v-for="i in 10" :key="i" :span="8"> </a-col>
         </a-row>
@@ -106,6 +104,7 @@ export default {
     return {
       data: [],
       columns,
+      recordId: '',
       form: {
         layout: "inline",
         fieldA: "",
@@ -139,6 +138,18 @@ export default {
       this.visible = false;
     },
     handleOk() {},
+    exitCustomRow(record, index) {
+      return {
+        style: {
+          color: record.id === this.recordId ? "red" : "",
+        },
+        on: {
+          click: () => {
+            this.recordId = record.id;
+          },
+        },
+      };
+    },
   },
 };
 </script>
