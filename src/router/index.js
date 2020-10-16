@@ -75,6 +75,10 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  // 未登录验证
+  if(to.path !=='/login'){
+    if(!sessionStorage.getItem('token')) return next('/login')
+  }
   Nprogress.start()
   next()
 })
